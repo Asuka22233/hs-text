@@ -1,5 +1,5 @@
 import { map } from "./map.js";
-import { toWgs84FromGcj02 } from "./coord.js";
+import { toGcj02FromWgs84, toWgs84FromGcj02 } from "./coord.js";
 
 // 用于存储当前显示的红色景点标记
 let redSiteMarkers = [];
@@ -117,8 +117,11 @@ function initAMap() {
 }
 
 // 搜索红色景点
-async function searchRedSites(bounds) {
+async function searchRedSites(bounds, options = {}) {
     if (isSearching) return;
+    if (!bounds) return;
+
+    const { force = false } = options;
     
     const zoom = map.getZoom();
     
@@ -131,10 +134,9 @@ async function searchRedSites(bounds) {
         return;
     }
     
-    if (!shouldSearch(bounds)) return;
+    if (!force && !shouldSearch(bounds)) return;
     
     isSearching = true;
-    lastSearchBounds = bounds;
     
     try {
         // 确保高德API已加载
@@ -149,12 +151,13 @@ async function searchRedSites(bounds) {
         }
         
         const center = bounds.getCenter();
+        const searchCenter = toGcj02FromWgs84(center.lat, center.lng);
         
         // 使用JSONP方式避免跨域问题
         const keywords = ['纪念馆', '革命遗址', '烈士陵园', '红色景点', '抗战'];
         const keyword = keywords[Math.floor(Math.random() * keywords.length)];
         
-        console.log(`🔍 正在搜索关键词: ${keyword}，中心点: ${center.lat}, ${center.lng}`);
+        console.log(`🔍 正在搜索关键词: ${keyword}，中心点: ${searchCenter.lat}, ${searchCenter.lng}`);
         
         // 创建PlaceSearch实例
         if (!placeSearch && AMap && AMap.PlaceSearch) {
@@ -172,7 +175,7 @@ async function searchRedSites(bounds) {
         }
         
         // 搜索周边
-        placeSearch.searchNearBy(keyword, [center.lng, center.lat], 10000, (status, result) => {
+        placeSearch.searchNearBy(keyword, [searchCenter.lng, searchCenter.lat], 10000, (status, result) => {
             console.log('📊 搜索状态:', status);
             console.log('📊 搜索结果:', result);
             
@@ -214,8 +217,9 @@ async function searchRedSites(bounds) {
             } else {
                 console.log('ℹ️ 未找到相关红色景点，尝试移动地图或换个区域');
                 clearRedSiteMarkers();
+                showSearchBanner('未找到相关红色景点');
             }
-            
+            lastSearchBounds = bounds;
             isSearching = false;
         });
         
@@ -247,5 +251,11 @@ const debouncedSearch = debounce((e) => {
 map.on('zoomend', debouncedSearch);
 map.on('moveend', debouncedSearch);
 
-export { searchRedSites, clearRedSiteMarkers };
+function searchRedSitesNow() {
+    showSearchBanner('正在搜索...');
+    lastSearchBounds = null;
+    searchRedSites(map.getBounds(), { force: true });
+}
+
+export { searchRedSites, clearRedSiteMarkers, searchRedSitesNow };
 

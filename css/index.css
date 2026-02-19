@@ -1,168 +1,187 @@
 body,
 html {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
 }
 
 #map {
-    height: 100vh;
+  height: 100vh;
 }
 
 select:focus {
-    outline: white solid 1px;
+  outline: white solid 1px;
 }
 
 select {
-    padding: 4px;
-    background: red;
-    color: white;
-    border: 1px solid #ccc;
-    cursor: pointer;
+  padding: 4px;
+  background: red;
+  color: white;
+  border: 1px solid #ccc;
+  cursor: pointer;
 }
 
 #coordinate-display {
-    position: absolute;
-    font-size: 14px;
-    top: 5px;
-    right: 5px;
-    background: rgba(255, 255, 255, 0.8);
-    padding: 2px 5px;
-    z-index: 1000;
-    display: none;
+  position: absolute;
+  font-size: 14px;
+  top: 5px;
+  right: 5px;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 2px 5px;
+  z-index: 1000;
+  display: none;
 }
 
 #nearest-points {
-    position: fixed;
-    bottom: 20px;
-    left: 10px;
-    background: rgba(255, 0, 0, 0.8);
-    padding: 10px;
-    border: 2px solid #8B0000;
-    border-radius: 8px;
-    z-index: 1000;
-    max-width: 70%;
-    display: none;
-    color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  bottom: 20px;
+  left: 10px;
+  background: rgba(255, 0, 0, 0.8);
+  padding: 10px;
+  border: 2px solid #8b0000;
+  border-radius: 8px;
+  z-index: 1000;
+  max-width: 70%;
+  display: none;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 #nearest-points ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
 #nearest-points li {
-    cursor: pointer;
-    margin: 5px 0;
-    color: gold;
+  cursor: pointer;
+  margin: 5px 0;
+  color: gold;
 }
 
 #nearest-points li:hover {
-    color: goldenrod;
-    text-decoration: underline;
+  color: goldenrod;
+  text-decoration: underline;
 }
 
 #nearest-points h4 {
-    margin: 0 0 10px 0;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
+  margin: 0 0 10px 0;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .leaflet-control-locate {
-    background: white;
-    background-clip: padding-box;
-    border: 2px solid rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
-    cursor: pointer;
-    width: 30px;
-    height: 30px;
-    padding: 0;
+  background: white;
+  background-clip: padding-box;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  padding: 0;
 }
 
 .leaflet-control-locate.active:hover {
-    background: #f4f4f4;
+  background: #f4f4f4;
 }
 
 .leaflet-popup-content b {
-    text-align: center;
-    display: block;
+  text-align: center;
+  display: block;
 }
 
 .leaflet-popup-content p {
-    margin: 1.3em 0 0 0;
+  margin: 1.3em 0 0 0;
 }
 
 .site-intro {
-    text-indent: 2em;
+  text-indent: 2em;
 }
 
 #locate-icon {
-    stroke-width: 3;
-    stroke: #bbb;
+  stroke-width: 3;
+  stroke: #bbb;
 }
 
 #sidebar {
-    position: absolute;
-    top: 50px;
-    left: 10px;
-    background: rgba(255, 0, 0, 0.8);
-    padding: 10px;
-    border: 2px solid #8B0000;
-    border-radius: 8px;
-    z-index: 1000;
-    width: 200px;
-    transition: transform 0.3s ease;
-    transform: translateX(-120%);
-    color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 50px;
+  left: 10px;
+  background: rgba(255, 0, 0, 0.8);
+  padding: 10px;
+  border: 2px solid #8b0000;
+  border-radius: 8px;
+  z-index: 1000;
+  width: 200px;
+  transition: transform 0.3s ease;
+  transform: translateX(-120%);
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 #sidebar.open {
-    transform: translateX(0);
+  transform: translateX(0);
 }
 
 #sidebar-toggle {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: rgba(255, 0, 0, 0.8);
-    border: 2px solid #8B0000;
-    border-radius: 4px;
-    padding: 5px;
-    cursor: pointer;
-    z-index: 1001;
-    color: white;
-    width: 16px;
-    height: 16px;
-    line-height: 16px;
-    text-align: center;
-    font-size: 16px;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255, 0, 0, 0.8);
+  border: 2px solid #8b0000;
+  border-radius: 4px;
+  padding: 5px;
+  cursor: pointer;
+  z-index: 1001;
+  color: white;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 #sidebar-toggle:hover {
-    color: #f4f4f4;
-    background-color: rgba(255, 64, 64, 0.8);
+  color: #f4f4f4;
+  background-color: rgba(255, 64, 64, 0.8);
 }
 
 #sidebar ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
 #sidebar li {
-    cursor: pointer;
-    margin: 10px 0;
-    color: gold;
+  cursor: pointer;
+  margin: 10px 0;
+  color: gold;
 }
 
 #sidebar li:hover {
-    color: goldenrod;
-    text-decoration: underline;
+  color: goldenrod;
+  text-decoration: underline;
+}
+
+#red-sites-refresh {
+  position: absolute;
+  top: 44px;
+  right: 10px;
+  background: rgba(255, 0, 0, 0.85);
+  border: 2px solid #8b0000;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  z-index: 1001;
+  color: white;
+  font-size: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#red-sites-refresh:hover {
+  background: rgba(255, 64, 64, 0.85);
 }

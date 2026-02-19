@@ -1,17 +1,24 @@
 #nearest-points {
-    font-size: small;
+  font-size: small;
 }
 
 #nearest-points h4 {
-    font-size: small;
+  font-size: small;
 }
 
 #sidebar {
-    font-size: small;
-    width: 160px;
+  font-size: small;
+  width: 160px;
 }
 
 #location-nav button {
-    padding: 4px 8px;
-    font-size: 11px;
+  padding: 4px 8px;
+  font-size: 11px;
+}
+
+#red-sites-refresh {
+  top: 36px;
+  right: 8px;
+  padding: 5px 8px;
+  font-size: 11px;
 }

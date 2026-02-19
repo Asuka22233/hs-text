@@ -1,7 +1,7 @@
 import { map } from "./map.js";
 import { pathPointIcon } from "./icon.js";
 import { pathPoints } from "./pathPoints.js";
-import "./redSites.js"; // 引入红色景点搜索功能
+import { searchRedSitesNow } from "./redSites.js"; // 引入红色景点搜索功能
 import { toWgs84FromGcj02 } from "./coord.js";
 
 function setMapHeight() {
@@ -92,4 +92,11 @@ document.getElementById('sidebar-toggle').addEventListener('click', function () 
     let sidebar = document.getElementById('sidebar');
     sidebar.classList.toggle('open');
 });
+
+const redSitesRefresh = document.getElementById('red-sites-refresh');
+if (redSitesRefresh) {
+    redSitesRefresh.addEventListener('click', () => {
+        searchRedSitesNow();
+    });
+}
 
