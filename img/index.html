@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>“赤心图迹”红色景点地图</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" media="screen and (max-width: 512px)" href="css/mobile.css">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+
+    <!-- 引入Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- <script src="leaflet.js"></script> -->
+    <script src="lib/leaflet.mapCorrection.js"></script>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div id="coordinate-display">
+        经纬度: <span id="coordinates">-</span>
+    </div>
+    <div id="nearest-points">
+        <h4>离你最近的红色景点：</h4>
+        <ul id="nearest-points-list"></ul>
+    </div>
+    <div id="sidebar">
+        <b>省份：</b>
+        <select name="location" id="location-nav">
+        </select>
+        <ul id="sidebar-list"></ul>
+    </div>
+    <div id="sidebar-toggle">☰</div>
+
+    <script type="text/javascript" src="./config/config.js"></script>
+    <script type="module" src="./js/index.js"></script>
+    <script type="module" src="./js/navigator.js"></script>
+</body>
+
+</html>

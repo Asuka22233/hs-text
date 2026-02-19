@@ -1,0 +1,17 @@
+#nearest-points {
+    font-size: small;
+}
+
+#nearest-points h4 {
+    font-size: small;
+}
+
+#sidebar {
+    font-size: small;
+    width: 160px;
+}
+
+#location-nav button {
+    padding: 4px 8px;
+    font-size: 11px;
+}
