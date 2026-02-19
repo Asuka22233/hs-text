@@ -191,20 +191,12 @@ async function searchRedSites(bounds, options = {}) {
                     const corrected = toWgs84FromGcj02(lat, lng);
                     
                     const marker = L.marker([corrected.lat, corrected.lng], { icon: redSiteIcon }).addTo(map);
-                    
-                    const popupContent = `
-                        <b>🚩 ${poi.name}</b><br>
-                        <p style="margin: 5px 0; font-size: 12px; color: #666;">
-                            ${poi.address || '暂无地址信息'}
-                        </p>
-                        ${poi.tel ? `<p style="margin: 5px 0; font-size: 12px;">📞 ${poi.tel}</p>` : ''}
-                        <p style="margin: 5px 0; font-size: 11px; color: #999;">
-                            联网搜索结果 (${keyword})
-                        </p>
-                    `;
-                    
-                    marker.bindPopup(popupContent, {
-                        maxWidth: Math.min(250, window.innerWidth - 100)
+
+                    marker.bindTooltip(poi.name, {
+                        permanent: true,
+                        direction: 'top',
+                        offset: [0, -44],
+                        className: 'red-site-label'
                     });
                     
                     redSiteMarkers.push(marker);
