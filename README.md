@@ -14,7 +14,7 @@
 
 ### 使用指南
 
-点击[这里](https://cwz2024.github.io/Harbin-project-2025/)进入地图网页
+点击[这里](https://asuka22233.github.io/hs-text/)进入地图网页
 
 点击右下角 `+` 键以放大地图
 
