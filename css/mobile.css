@@ -27,3 +27,75 @@
   font-size: 14px;
   padding: 3px 7px;
 }
+
+/* 移动设备轮播图样式 */
+#carousel-container {
+  top: 90px;
+  right: 8px;
+  width: calc(100vw - 36px);
+  max-width: 100%;
+  margin-right: 8px;
+  margin-top: 8px;
+}
+
+#carousel-toggle {
+  padding: 5px 8px;
+  font-size: 11px;
+  margin-bottom: 6px;
+}
+
+#carousel-toggle.compact {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  font-size: 16px;
+  line-height: 28px;
+  margin-bottom: 0;
+}
+
+#carousel-content {
+  padding: 8px;
+}
+
+#carousel-track {
+  height: 190px;
+  margin-bottom: 10px;
+}
+
+.carousel-image {
+  max-height: 65%;
+}
+
+.carousel-title {
+  font-size: 13px;
+}
+
+#carousel-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+#carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  flex: 1;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+}
+
+.carousel-dot.active {
+  width: 10px;
+  height: 10px;
+}
+
+#carousel-prev,
+#carousel-next {
+  padding: 4px 8px;
+  font-size: 16px;
+}

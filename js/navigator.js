@@ -90,6 +90,10 @@ function DisplayNearestPoints(userLat, userLng) {
             let lng = parseFloat(this.getAttribute('data-lng'));
             map.closePopup();
             map.setView([lat, lng], DEFAULT_ZOOM);
+            // 打开该景点的详情弹窗
+            if (window.openPopupByCoords) {
+                window.openPopupByCoords(lat, lng);
+            }
         });
     });
 }
