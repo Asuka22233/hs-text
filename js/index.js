@@ -342,6 +342,17 @@ class Carousel {
     
     // 初始化轮播图
     initCarousel() {
+        // 检测是否为移动设备
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        if (isMobile && this.content.style.display !== 'none') {
+            // 手机端默认关闭轮播图
+            this.content.style.display = 'none';
+            this.toggleBtn.textContent = '▼展示图片';
+            this.toggleBtn.classList.remove('compact');
+            this.startCompactTimer();
+        }
+        
         this.updateCarousel();
     }
 }
