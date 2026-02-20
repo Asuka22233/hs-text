@@ -2,13 +2,10 @@ import { map } from "./map.js";
 import { locateControler } from "./locateControl.js";
 import { userIcon } from "./icon.js";
 import { pathPoints } from "./pathPoints.js";
-import { toWgs84FromGcj02 } from "./coord.js";
 
 let userMarker = null;
-const displayPoints = pathPoints.map(point => {
-    const corrected = toWgs84FromGcj02(point.lat, point.lng);
-    return { ...point, lat: corrected.lat, lng: corrected.lng };
-});
+// pathPoints 现在存储的是 WGS-84 坐标，直接使用
+const displayPoints = pathPoints;
 
 // 定位功能
 if ("geolocation" in navigator) {

@@ -2,7 +2,6 @@ import { map } from "./map.js";
 import { pathPointIcon } from "./icon.js";
 import { pathPoints } from "./pathPoints.js";
 import { searchRedSitesNow } from "./redSites.js"; // 引入红色景点搜索功能
-import { toWgs84FromGcj02 } from "./coord.js";
 
 function setMapHeight() {
     let map = document.getElementById('map');
@@ -23,11 +22,8 @@ function isMobile() {
 // 根据设备类型决定是否显示经纬度
 document.getElementById('coordinate-display').style.display = isMobile() ? 'none' : 'block';
 
-// pathPoints 存储的是 GCJ-02 坐标，转换为 WGS-84 后传给 Leaflet
-const displayPoints = pathPoints.map(point => {
-    const corrected = toWgs84FromGcj02(point.lat, point.lng);
-    return { ...point, lat: corrected.lat, lng: corrected.lng };
-});
+// pathPoints 现在存储的是 WGS-84 坐标，直接使用
+const displayPoints = pathPoints;
 
 displayPoints.forEach(function (point) {
     let marker = L.marker([point.lat, point.lng], { icon: pathPointIcon }).addTo(map);
