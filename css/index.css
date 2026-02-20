@@ -191,8 +191,8 @@ select {
   color: #b00000;
   border: 1px solid rgba(139, 0, 0, 0.4);
   border-radius: 6px;
-  padding: 2px 6px;
-  font-size: 12px;
+  padding: 4px 10px;
+  font-size: 16px;
   font-weight: 600;
   white-space: nowrap;
   pointer-events: none;

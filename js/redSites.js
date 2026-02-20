@@ -1,5 +1,6 @@
 import { map } from "./map.js";
 import { toGcj02FromWgs84, toWgs84FromGcj02 } from "./coord.js";
+import { pathPoints } from "./pathPoints.js";
 
 // 用于存储当前显示的红色景点标记
 let redSiteMarkers = [];
@@ -9,12 +10,41 @@ let AMap = null;
 let placeSearch = null;
 let bannerTimer = null;
 
-// 创建红色景点的图标（使用红色标记以示区分）
+// 计算两点之间的距离（米）
+function calculateDistance(lat1, lng1, lat2, lng2) {
+    const R = 6371000; // 地球半径（米）
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLng = (lng2 - lng1) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLng / 2) * Math.sin(dLng / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+}
+
+// 检查景点是否与 pathPoints 重复
+function isDuplicatePoint(name, lat, lng) {
+    // 检查名称是否相似或距离是否很近
+    for (const point of pathPoints) {
+        // 名称包含关系检查
+        if (point.title.includes(name) || name.includes(point.title)) {
+            return true;
+        }
+        // 距离检查（如果两个景点距离小于200米，认为是重复的）
+        const distance = calculateDistance(lat, lng, point.lat, point.lng);
+        if (distance < 200) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// 创建联网搜索景点的图标（使用红色圆形图标以示区分）
 const redSiteIcon = L.icon({
-    iconUrl: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNSIgaGVpZ2h0PSI0MSIgdmlld0JveD0iMCAwIDI1IDQxIj48cGF0aCBmaWxsPSIjZGQzMzMzIiBkPSJNMTIuNSwwQzUuNiwwLDAuMSw1LjUsMC4xLDEyLjRjMCw2LjksMTIuNCwyOC42LDEyLjQsMjguNnMxMi40LTIxLjcsMTIuNC0yOC42QzI0LjksNS41LDE5LjQsMCwxMi41LDB6IE0xMi41LDE3LjljLTMsMC01LjUtMi41LTUuNS01LjVzMi41LTUuNSw1LjUtNS41czUuNSwyLjUsNS41LDUuNVMxNS41LDE3LjksMTIuNSwxNy45eiIvPjwvc3ZnPg==',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34]
+    iconUrl: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMCIgZmlsbD0iI2RkMzMzMyIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjIiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSI0IiBmaWxsPSIjZmZmZmZmIi8+PC9zdmc+',
+    iconSize: [42, 42],
+    iconAnchor: [21, 21],
+    popupAnchor: [0, -21]
 });
 
 // 清除之前搜索的标记
@@ -182,20 +212,51 @@ async function searchRedSites(bounds, options = {}) {
             if (status === 'complete' && result.poiList && result.poiList.pois && result.poiList.pois.length > 0) {
                 clearRedSiteMarkers();
                 
-                const pois = result.poiList.pois.slice(0, 5);
-                console.log(`✅ 找到 ${pois.length} 个红色景点`);
+                // 过滤掉与 pathPoints 重复的景点
+                const allPois = result.poiList.pois;
+                const filteredPois = allPois.filter(poi => {
+                    const lat = poi.location.lat;
+                    const lng = poi.location.lng;
+                    const corrected = toWgs84FromGcj02(lat, lng);
+                    return !isDuplicatePoint(poi.name, corrected.lat, corrected.lng);
+                });
                 
-                pois.forEach(poi => {
+                // 进一步过滤，确保搜索结果之间至少相距50米
+                const selectedPois = [];
+                for (const poi of filteredPois) {
+                    if (selectedPois.length >= 5) break; // 最多5个
+                    
                     const lat = poi.location.lat;
                     const lng = poi.location.lng;
                     const corrected = toWgs84FromGcj02(lat, lng);
                     
+                    // 检查与已选景点的距离
+                    let tooClose = false;
+                    for (const selected of selectedPois) {
+                        const distance = calculateDistance(
+                            corrected.lat, corrected.lng,
+                            selected.corrected.lat, selected.corrected.lng
+                        );
+                        if (distance < 50) {
+                            tooClose = true;
+                            break;
+                        }
+                    }
+                    
+                    if (!tooClose) {
+                        selectedPois.push({ poi, corrected });
+                    }
+                }
+                
+                console.log(`✅ 找到 ${selectedPois.length} 个红色景点（已排除重复和过近景点）`);
+                
+                selectedPois.forEach(({ poi, corrected }) => {
                     const marker = L.marker([corrected.lat, corrected.lng], { icon: redSiteIcon }).addTo(map);
 
                     marker.bindTooltip(poi.name, {
                         permanent: true,
                         direction: 'top',
-                        offset: [0, -44],
+                        offset: [0, -18],
                         className: 'red-site-label'
                     });
                     
@@ -203,8 +264,8 @@ async function searchRedSites(bounds, options = {}) {
                 });
                 
                 // 在屏幕上方显示提示，避免遮挡地图
-                if (pois.length > 0) {
-                    showSearchBanner(`找到 ${pois.length} 个红色景点`);
+                if (selectedPois.length > 0) {
+                    showSearchBanner(`找到 ${selectedPois.length} 个红色景点`);
                 }
             } else {
                 console.log('ℹ️ 未找到相关红色景点，尝试移动地图或换个区域');
