@@ -23,6 +23,7 @@ function isMobile() {
 // 根据设备类型决定是否显示经纬度
 document.getElementById('coordinate-display').style.display = isMobile() ? 'none' : 'block';
 
+// pathPoints 存储的是 GCJ-02 坐标，转换为 WGS-84 后传给 Leaflet
 const displayPoints = pathPoints.map(point => {
     const corrected = toWgs84FromGcj02(point.lat, point.lng);
     return { ...point, lat: corrected.lat, lng: corrected.lng };
