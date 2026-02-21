@@ -30,13 +30,8 @@ map.addControl(locateControler);
 document.querySelector(".leaflet-control-zoom-in").title = "放大";
 document.querySelector(".leaflet-control-zoom-out").title = "缩小";
 
-// 鼠标事件返回的已经是 WGS-84 坐标，直接显示（添加节流减少频繁DOM更新）
-let lastMoveUpdate = 0;
+// 鼠标事件返回的已经是 WGS-84 坐标，直接显示
 map.on("mousemove", function (e) {
-  const now = Date.now();
-  if (now - lastMoveUpdate < 50) return; // 50ms节流
-  lastMoveUpdate = now;
-
   let lat = e.latlng.lat.toFixed(6);
   let lng = e.latlng.lng.toFixed(6);
 

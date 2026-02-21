@@ -14,13 +14,23 @@ window.openPopupByCoords = function (lat, lng) {
   }
 };
 
+function setMapHeight() {
+  let map = document.getElementById("map");
+  map.style.height = window.innerHeight + "px";
+}
+
+setMapHeight();
+
+window.addEventListener("resize", setMapHeight);
+window.addEventListener("orientationchange", setMapHeight);
+
+map.setView([INITIAL_LAT, INITIAL_LNG], DEFAULT_ZOOM);
+
 function isMobile() {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     navigator.userAgent,
   );
 }
-
-map.setView([INITIAL_LAT, INITIAL_LNG], DEFAULT_ZOOM);
 
 // 根据设备类型决定是否显示经纬度
 document.getElementById("coordinate-display").style.display = isMobile()
@@ -39,11 +49,14 @@ displayPoints.forEach(function (point) {
             <img src="${point.image}" alt="${point.title}" style="width:100%;" onerror="this.onerror=null;this.src='img/mark1.png';"><br>
             <p class=\"site-intro\">${point.content || "这是" + point.title}</p><br>
         `;
-  marker.bindPopup(popupContent, {
-    maxWidth: Math.min(300, window.innerWidth - 100),
-    maxHeight: window.innerHeight - 200,
-    autoPanPadding: [50, 100],
-  });
+  marker
+    .bindPopup(popupContent, {
+      maxWidth: Math.min(300, window.innerWidth - 100),
+      maxHeight: window.innerHeight - 200,
+      autoPanPadding: [50, 100],
+    })
+    .openPopup()
+    .closePopup();
   marker.on("click", function () {
     map.setView([point.lat, point.lng], map.getZoom(), {
       animate: true,
@@ -61,11 +74,16 @@ displayPoints.forEach(function (point) {
 map.setView([INITIAL_LAT, INITIAL_LNG], 5);
 let nav = document.querySelector("#location-nav");
 
-const province = [...new Set(displayPoints.map((p) => p.location))].sort(
-  (a, b) => a.localeCompare(b),
-);
+let province = [];
+for (let i = 0; i < displayPoints.length; i++) {
+  if (!province.includes(displayPoints[i].location)) {
+    province.push(displayPoints[i].location);
+  }
+}
+province.sort((a, b) => a.localeCompare(b));
 
 updateSidebar(displayPoints.filter((point) => point.location === province[0]));
+console.log(province);
 nav.innerHTML = province
   .map(
     (p) => `
@@ -236,6 +254,21 @@ class Carousel {
         `,
       )
       .join("");
+
+    // 为所有标题添加鼠标事件
+    this.addTitleHoverEvents();
+  }
+
+  // 添加标题的hover事件
+  addTitleHoverEvents() {
+    this.track.querySelectorAll(".carousel-title").forEach((title) => {
+      title.addEventListener("mouseenter", () => {
+        title.classList.add("hover");
+      });
+      title.addEventListener("mouseleave", () => {
+        title.classList.remove("hover");
+      });
+    });
   }
 
   // 绑定标题点击事件（在track上使用事件委托）
@@ -320,12 +353,12 @@ class Carousel {
     this.startAutoPlay();
   }
 
-  // 启动自动轮播（5秒切换一次）
+  // 启动自动轮播（3秒切换一次）
   startAutoPlay() {
     this.stopAutoPlay(); // 清除旧定时器
     this.autoPlayTimer = setInterval(() => {
       this.nextSlide();
-    }, 5000);
+    }, 3000);
   }
 
   // 停止自动轮播

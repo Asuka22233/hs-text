@@ -1,13 +1,3 @@
-:root {
-  --red-bg: rgba(255, 0, 0, 0.8);
-  --red-bg-hover: rgba(255, 64, 64, 0.8);
-  --red-bg-strong: rgba(255, 0, 0, 0.85);
-  --red-bg-strong-hover: rgba(255, 64, 64, 0.85);
-  --red-border: #8b0000;
-  --red-text: #b00000;
-  --shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
 body,
 html {
   margin: 0;
@@ -18,7 +8,6 @@ html {
 
 #map {
   height: 100vh;
-  height: 100dvh;
 }
 
 select:focus {
@@ -31,7 +20,6 @@ select {
   color: white;
   border: 1px solid #ccc;
   cursor: pointer;
-  font-size: inherit;
 }
 
 #coordinate-display {
@@ -49,15 +37,15 @@ select {
   position: fixed;
   bottom: 20px;
   left: 10px;
-  background: var(--red-bg);
+  background: rgba(255, 0, 0, 0.8);
   padding: 10px;
-  border: 2px solid var(--red-border);
+  border: 2px solid #8b0000;
   border-radius: 8px;
   z-index: 1000;
   max-width: 70%;
   display: none;
   color: white;
-  box-shadow: var(--shadow);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 #nearest-points ul {
@@ -115,16 +103,16 @@ select {
   position: absolute;
   top: 50px;
   left: 10px;
-  background: var(--red-bg);
+  background: rgba(255, 0, 0, 0.8);
   padding: 10px;
-  border: 2px solid var(--red-border);
+  border: 2px solid #8b0000;
   border-radius: 8px;
   z-index: 1000;
   width: 200px;
   transition: transform 0.3s ease;
   transform: translateX(-120%);
   color: white;
-  box-shadow: var(--shadow);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 #sidebar.open {
@@ -135,8 +123,8 @@ select {
   position: absolute;
   top: 10px;
   left: 10px;
-  background: var(--red-bg);
-  border: 2px solid var(--red-border);
+  background: rgba(255, 0, 0, 0.8);
+  border: 2px solid #8b0000;
   border-radius: 4px;
   padding: 5px;
   cursor: pointer;
@@ -148,12 +136,12 @@ select {
   text-align: center;
   font-size: 16px;
   font-weight: bold;
-  box-shadow: var(--shadow);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 #sidebar-toggle:hover {
   color: #f4f4f4;
-  background-color: var(--red-bg-hover);
+  background-color: rgba(255, 64, 64, 0.8);
 }
 
 #sidebar ul {
@@ -177,19 +165,19 @@ select {
   position: absolute;
   top: 44px;
   right: 10px;
-  background: var(--red-bg-strong);
-  border: 2px solid var(--red-border);
+  background: rgba(255, 0, 0, 0.85);
+  border: 2px solid #8b0000;
   border-radius: 6px;
   padding: 6px 10px;
   cursor: pointer;
   z-index: 1001;
   color: white;
   font-size: 12px;
-  box-shadow: var(--shadow);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 #red-sites-refresh:hover {
-  background: var(--red-bg-strong-hover);
+  background: rgba(255, 64, 64, 0.85);
 }
 
 .red-site-label {
@@ -208,25 +196,6 @@ select {
 .red-site-label::before {
   border-top-color: rgba(139, 0, 0, 0.4);
 }
-
-/* 搜索提示横幅 */
-#red-sites-banner {
-  position: fixed;
-  top: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(221, 51, 51, 0.92);
-  color: #fff;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 13px;
-  z-index: 9999;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-  display: none;
-  max-width: 90vw;
-  text-align: center;
-}
-
 /* 轮播图样式 */
 #carousel-container {
   position: absolute;
@@ -240,14 +209,14 @@ select {
 
 #carousel-toggle {
   display: block;
-  background: var(--red-bg-strong);
-  border: 2px solid var(--red-border);
+  background: rgba(255, 0, 0, 0.85);
+  border: 2px solid #8b0000;
   border-radius: 6px;
   padding: 6px 10px;
   cursor: pointer;
   color: white;
   font-size: 12px;
-  box-shadow: var(--shadow);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   white-space: nowrap;
   transition: background 0.3s ease;
   width: 100%;
@@ -257,7 +226,7 @@ select {
 }
 
 #carousel-toggle:hover {
-  background: var(--red-bg-strong-hover);
+  background: rgba(255, 64, 64, 0.85);
 }
 
 #carousel-toggle.compact {
@@ -280,7 +249,7 @@ select {
   background: rgba(255, 255, 255, 0.95);
   border-radius: 8px;
   padding: 10px;
-  box-shadow: var(--shadow);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   overflow: visible;
   animation: slideUp 0.3s ease;
   position: relative;
@@ -333,7 +302,7 @@ select {
 }
 
 .carousel-title {
-  color: var(--red-text);
+  color: #b00000;
   font-weight: bold;
   font-size: 16px;
   text-align: center;
@@ -396,8 +365,8 @@ select {
 
 #carousel-prev,
 #carousel-next {
-  background: var(--red-bg-strong);
-  border: 2px solid var(--red-border);
+  background: rgba(255, 0, 0, 0.85);
+  border: 2px solid #8b0000;
   border-radius: 4px;
   padding: 6px 12px;
   cursor: pointer;
@@ -411,13 +380,13 @@ select {
 
 #carousel-prev:hover,
 #carousel-next:hover {
-  background: var(--red-bg-strong-hover);
+  background: rgba(255, 64, 64, 0.85);
 }
 
 #carousel-indicator {
   flex: 1;
   text-align: center;
-  color: var(--red-text);
+  color: #b00000;
   font-size: 12px;
   font-weight: bold;
   display: none;
