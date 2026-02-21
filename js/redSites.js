@@ -65,20 +65,6 @@ function ensureSearchBanner() {
 
   banner = document.createElement("div");
   banner.id = "red-sites-banner";
-  banner.style.position = "fixed";
-  banner.style.top = "12px";
-  banner.style.left = "50%";
-  banner.style.transform = "translateX(-50%)";
-  banner.style.background = "rgba(221, 51, 51, 0.92)";
-  banner.style.color = "#fff";
-  banner.style.padding = "8px 12px";
-  banner.style.borderRadius = "8px";
-  banner.style.fontSize = "13px";
-  banner.style.zIndex = "9999";
-  banner.style.boxShadow = "0 6px 16px rgba(0,0,0,0.2)";
-  banner.style.display = "none";
-  banner.style.maxWidth = "90vw";
-  banner.style.textAlign = "center";
   document.body.appendChild(banner);
   return banner;
 }
@@ -88,9 +74,7 @@ function showSearchBanner(message) {
   banner.textContent = message;
   banner.style.display = "block";
 
-  if (bannerTimer) {
-    clearTimeout(bannerTimer);
-  }
+  if (bannerTimer) clearTimeout(bannerTimer);
   bannerTimer = setTimeout(() => {
     banner.style.display = "none";
   }, 2000);
