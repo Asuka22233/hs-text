@@ -6,6 +6,7 @@ import { toGcj02FromWgs84 } from "./coord.js";
 
 let userMarker = null;
 let nearestSearching = false;
+let nearestSearched = false; // 标记是否已搜索过最近景点
 
 // 定位功能
 if ("geolocation" in navigator) {
@@ -28,8 +29,12 @@ if ("geolocation" in navigator) {
       locateControler.setLatLng([userLat, userLng]);
       locateControler.activate();
 
-      document.getElementById("nearest-points").style.display = "block";
-      searchNearestRedSites(userLat, userLng);
+      // 只在首次定位时搜索最近景点，避免反复刷新
+      if (!nearestSearched) {
+        nearestSearched = true;
+        document.getElementById("nearest-points").style.display = "block";
+        searchNearestRedSites(userLat, userLng);
+      }
     },
     function (error) {
       console.error("Error Code = " + error.code + " - " + error.message);
