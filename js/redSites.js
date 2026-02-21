@@ -325,9 +325,13 @@ map.on("zoomend", debouncedSearch);
 map.on("moveend", debouncedSearch);
 
 function searchRedSitesNow() {
+  if (map.getZoom() < 10) {
+    showSearchBanner("请先放大地图至更高级别再搜索");
+    return;
+  }
   showSearchBanner("正在搜索...");
   lastSearchBounds = null;
   searchRedSites(map.getBounds(), { force: true });
 }
 
-export { searchRedSites, clearRedSiteMarkers, searchRedSitesNow };
+export { searchRedSites, clearRedSiteMarkers, searchRedSitesNow, initAMap };
